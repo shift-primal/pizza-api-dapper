@@ -1,13 +1,26 @@
-var builder = WebApplication.CreateBuilder(args);
+public class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Default")!;
+        var connectionString = builder.Configuration.GetConnectionString("Default")!;
 
-builder.Services.AddScoped<SizeRepository>(_ => new SizeRepository(connectionString));
+        builder.Services.AddScoped(_ => new SizesRepository(connectionString));
+        builder.Services.AddScoped(_ => new CustomersRepository(connectionString));
+        builder.Services.AddScoped(_ => new OrdersRepository(connectionString));
+        builder.Services.AddScoped(_ => new ToppingsRepository(connectionString));
+        builder.Services.AddScoped(_ => new PizzasRepository(connectionString));
+        builder.Services.AddScoped(_ => new PizzaToppingsRepository(connectionString));
 
-var app = builder.Build();
+        builder.Services.AddControllers();
 
-DbInit.Init(connectionString);
+        var app = builder.Build();
 
-app.MapGet("/sizes", async (SizeRepository repo) => repo.GetAll());
+        DbInit.Init(connectionString);
 
-app.Run();
+        app.MapControllers();
+
+        app.Run();
+    }
+}

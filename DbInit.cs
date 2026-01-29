@@ -36,7 +36,7 @@ public static class DbInit
             FOREIGN KEY (customerid) REFERENCES customers (id)
         );
 
-        CREATE TABLE IF NOT EXISTS pizza (
+        CREATE TABLE IF NOT EXISTS pizzas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             orderid INTEGER NOT NULL,
             sizeid INTEGER NOT NULL,

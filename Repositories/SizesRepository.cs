@@ -1,7 +1,7 @@
 using Dapper;
 using Microsoft.Data.Sqlite;
 
-public class SizeRepository(string connectionString)
+public class SizesRepository(string connectionString)
 {
     private readonly string _connectionString = connectionString;
 
