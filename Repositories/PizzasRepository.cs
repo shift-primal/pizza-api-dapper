@@ -104,7 +104,13 @@ public class PizzasRepository(string connectionString)
     public async Task Delete(int id)
     {
         using var conn = new SqliteConnection(_connectionString);
-        await conn.ExecuteAsync("DELETE FROM pizzas WHERE id = @Id", new { Id = id });
+
+        await conn.ExecuteAsync(
+            @"
+            DELETE FROM pizzatoppings WHERE pizzaid = @Id;
+            DELETE FROM pizzas WHERE id = @Id",
+            new { Id = id }
+        );
     }
 
     // Toppings
